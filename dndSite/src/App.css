@@ -1,41 +1,63 @@
-#root {
-  max-width: 1280px;
+* {
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.displayFlex {
+  display: flex;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.displayGrid {
+  display: grid;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.App {
+  margin: 5em;
 }
 
-.card {
-  padding: 2em;
+#firstPage {
+  grid-template-areas:
+    "fichaheader fichaheader fichaheader"
+    "fichacolumn1 fichacolumn2 fichacolumn3"
+    "fichacolumn1 fichacolumn2 fichacolumn3"
+    "fichacolumn1 fichacolumn2 fichacolumn3";
 }
 
-.read-the-docs {
-  color: #888;
+#column1 {
+  grid-area: fichacolumn1;
+  display: flex;
+}
+#sideSpecs {
+  grid-area: leftSideColumn1;
+}
+
+#column2 {
+  grid-area: fichacolumn2;
+}
+#column3 {
+  grid-area: fichacolumn3;
+}
+
+#generalInfor {
+  grid-area: fichaheader;
+}
+#generalInfoInput {
+  grid-template-columns: 8em 8em 8em;
+  gap: 3em;
+}
+
+#charNameDiv {
+  flex-direction: column;
+}
+
+#leftSide1 {
+  grid-area: rightSideColumn1;
+}
+#leftSide2 {
+  grid-area: rightSideColumn2;
+}
+#leftSide3 {
+  grid-area: rightSideColumn3;
+}
+#leftSide4 {
+  grid-area: rightSideColumn4;
 }
