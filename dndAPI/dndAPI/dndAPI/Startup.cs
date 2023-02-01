@@ -30,7 +30,7 @@ namespace dndAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Documentation", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "dndAPI", Version = "v1" });
             });
         }
 
