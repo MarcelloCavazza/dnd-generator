@@ -67,5 +67,16 @@ namespace dndAPI.Controllers
             users.Add(userSeletec);
             return Ok(userSeletec);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteUser(int id)
+        {
+            var userSeletec = users.Find(user => user.Id == id);
+            if (userSeletec is null) return NotFound("Não achei!");
+
+            users.Remove(userSeletec);
+
+            return Ok(userSeletec);
+        }
     }
 }
