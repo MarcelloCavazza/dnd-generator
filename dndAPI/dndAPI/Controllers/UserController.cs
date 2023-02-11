@@ -41,5 +41,13 @@ namespace dndAPI.Controllers
 
             return Ok(userSelect);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<List<User>>> AddUser([FromBody]User user)
+        {
+            users.Add(user);
+            if (user.Id == 1 || user.Id == 2) return BadRequest("Não se pode repetir Ids!");
+            return Ok(users);
+        }
     }
 }
