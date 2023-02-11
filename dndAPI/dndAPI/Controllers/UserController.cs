@@ -26,7 +26,7 @@ namespace dndAPI.Controllers
                 password = "31231",
                 deleted= false,
             }
-    };
+        };
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
@@ -48,6 +48,24 @@ namespace dndAPI.Controllers
             users.Add(user);
             if (user.Id == 1 || user.Id == 2) return BadRequest("Não se pode repetir Ids!");
             return Ok(users);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task <ActionResult<User>> UpdateUser([FromBody]User user, int id)
+        {
+            if (id != user.Id) return BadRequest("IDs não iguais!");
+
+            var userSeletec = users.Find(user => user.Id == id);
+            if (userSeletec is null) return NotFound("Não achei!");
+
+            userSeletec.nickName = user.nickName;
+            userSeletec.email = user.email;
+            userSeletec.deleted = user.deleted;
+            userSeletec.password = user.password;
+
+            users.Remove(user);
+            users.Add(userSeletec);
+            return Ok(userSeletec);
         }
     }
 }
