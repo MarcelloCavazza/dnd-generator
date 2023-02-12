@@ -1,4 +1,4 @@
-﻿using dndAPI.Models;
+﻿using dndAPI.Services.UserService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -9,74 +9,49 @@ namespace dndAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private static List<User> users = new List<User> {
-            new User
-            {
-                Id = 1,
-                nickName = "John Doe",
-                email = "John@gmail.com",
-                password = "12345",
-                deleted= false,
-            },
-            new User
-            {
-                Id = 2,
-                nickName = "Sylas",
-                email = "sylas@gmail.com",
-                password = "31231",
-                deleted= false,
-            }
-        };
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService) {
+            _userService = userService;
+        }
+
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetAllUsers()
         {
-            return Ok(users);
+            var result = _userService.GetAllUsers();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            var userSelect = users.Find(user => user.Id == id);
-            if(userSelect is null) return NotFound("Sorry, we did not found the user you are looking for.");
-
-            return Ok(userSelect);
+            var result = _userService.GetUserById(id);
+            if (result == null) return NotFound("Usuario não encontrado");
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<List<User>>> AddUser([FromBody]User user)
         {
-            users.Add(user);
-            if (user.Id == 1 || user.Id == 2) return BadRequest("Não se pode repetir Ids!");
-            return Ok(users);
+            var result = _userService.AddUser(user);
+            if (result == null) return BadRequest("Não foi possível criar o usuário");
+            return Ok(result);
         }
 
         [HttpPatch("{id}")]
         public async Task <ActionResult<User>> UpdateUser([FromBody]User user, int id)
         {
-            if (id != user.Id) return BadRequest("IDs não iguais!");
-
-            var userSeletec = users.Find(user => user.Id == id);
-            if (userSeletec is null) return NotFound("Não achei!");
-
-            userSeletec.nickName = user.nickName;
-            userSeletec.email = user.email;
-            userSeletec.deleted = user.deleted;
-            userSeletec.password = user.password;
-
-            users.Remove(user);
-            users.Add(userSeletec);
-            return Ok(userSeletec);
+            var result = _userService.UpdateUser(user, id);
+            if (result == null) return BadRequest("Usuário não pode ser atualizado");
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var userSeletec = users.Find(user => user.Id == id);
-            if (userSeletec is null) return NotFound("Não achei!");
-
-            users.Remove(userSeletec);
-
-            return Ok(userSeletec);
+            var result = _userService.DeleteUser(id);
+            if (result == null) return BadRequest("Não foi possível remover o usuário");
+            return Ok(result);
         }
     }
 }
