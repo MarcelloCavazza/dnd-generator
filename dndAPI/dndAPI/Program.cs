@@ -1,4 +1,5 @@
 global using dndAPI.Models;
+global using Microsoft.EntityFrameworkCore;
 using dndAPI.Services.UserService;
 
 var builder = WebApplication.CreateBuilder(args);
