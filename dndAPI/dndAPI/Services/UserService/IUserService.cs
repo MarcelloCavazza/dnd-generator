@@ -5,10 +5,10 @@ namespace dndAPI.Services.UserService
 {
     public interface IUserService
     {
-        List<User> GetAllUsers();
+        List<User>? GetAllUsers();
         User GetUserById(int id);
-        List<User> AddUser([FromBody] User user);
-        User UpdateUser([FromBody] User user, int id);
+        List<User>? AddUser(User user);
+        User UpdateUser(User user, int id);
         User DeleteUser(int id);
     }
 }

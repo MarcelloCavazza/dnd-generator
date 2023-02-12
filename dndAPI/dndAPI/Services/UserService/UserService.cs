@@ -22,7 +22,7 @@ namespace dndAPI.Services.UserService
                 deleted= false,
             }
         };
-        public List<User> AddUser([FromBody] User user)
+        public List<User>? AddUser(User user)
         {
             users.Add(user);
             if (user.Id == 1 || user.Id == 2) return null;
@@ -39,7 +39,7 @@ namespace dndAPI.Services.UserService
             return userSeletec;
         }
 
-        public List<User> GetAllUsers()
+        public List<User>? GetAllUsers()
         {
             return users;
         }
@@ -52,7 +52,7 @@ namespace dndAPI.Services.UserService
             return userSelect;
         }
 
-        public User UpdateUser([FromBody] User user, int id)
+        public User UpdateUser(User user, int id)
         {
             if (id != user.Id) return null;
 
